@@ -1,0 +1,36 @@
+# Stage 1: Basic file cleanup (no Python syntax checking yet)
+# Run this first to fix basic file formatting issues
+repos:
+  # Fix basic file formatting issues
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      # Removes trailing spaces at end of lines
+      - id: trailing-whitespace
+        name: "Remove trailing whitespace"
+
+      # Ensures files end with exactly one newline
+      - id: end-of-file-fixer
+        name: "Fix file endings"
+
+      # Checks YAML files are valid
+      - id: check-yaml
+        name: "Validate YAML syntax"
+
+      # Warns about large files (>500KB) being committed
+      - id: check-added-large-files
+        name: "Check for large files"
+        args: [--maxkb=500]
+
+      # Looks for merge conflict markers like <<<<<<< =======
+      - id: check-merge-conflict
+        name: "Check for merge conflicts"
+
+  # YAML formatting validation
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        name: "Lint YAML files"
+        args: [-d, relaxed]
+        files: \.(yaml|yml)$

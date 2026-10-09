@@ -1,0 +1,79 @@
+stages:
+  - quality
+  - test
+
+# --- Templates ---
+.base_job:
+  image: python:3.10
+  tags:
+    - docker
+  before_script:
+    - pip install --upgrade pip
+    - pip install -e ".[dev]"  # Install package + dev dependencies (pytest, pre-commit, etc.)
+
+# --- Quality Assurance (Enforced Style & Standards) ---
+lint_and_style:
+  extends: .base_job
+  stage: quality
+  script:
+    - echo "🔍 Running code quality checks (Black, Flake8, Naming, etc.)..."
+    # Run all pre-commit hooks on all files
+    # This enforces EXACTLY the same rules as the local hooks
+    - pre-commit run --all-files
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH != "main"
+
+# --- Testing ---
+unit_tests:
+  extends: .base_job
+  stage: quality
+  script:
+    - echo "🧪 Running unit tests..."
+    - pytest tests/unit
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH != "main"
+
+# --- Existing Installation Tests (Manual/Web) ---
+.install_test_template:
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"
+      when: always
+    - when: manual
+      allow_failure: true
+
+install_test_linux:
+  extends: .install_test_template
+  image: python:3.10
+  tags:
+    - docker
+  script:
+    - pip install --upgrade pip
+    - pip install -e ".[docs]"
+    - python -c "import hypermri; print('Successfully imported hypermri')"
+
+install_test_macos:
+  extends: .install_test_template
+  tags:
+    - macos
+  script:
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -e ".[docs]"
+    - python -c "import hypermri; print('Successfully imported hypermri')"
+
+install_test_windows:
+  extends: .install_test_template
+  tags:
+    - windows
+  script:
+    - python -m venv venv
+    - .\venv\Scripts\Activate.ps1
+    - pip install --upgrade pip
+    - pip install -e ".[docs]"
+    - python -c "import hypermri; print('Successfully imported hypermri')"

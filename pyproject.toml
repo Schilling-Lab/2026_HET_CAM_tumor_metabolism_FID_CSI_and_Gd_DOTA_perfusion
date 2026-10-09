@@ -1,0 +1,217 @@
+[build-system]
+requires = ["setuptools>=67.5", "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hypermri"
+dynamic = ["version"]
+requires-python = ">=3.10.0"
+dependencies = [
+    "astropy",
+    "specutils",
+    "numpy >= 1.19.5",
+    "brukerapi@git+https://github.com/LucaNagel/brukerapi-python/#egg=read_in_complex_2dseq",
+    "matplotlib >= 3.9",
+    "matplotlib-scalebar>=0.8.1",
+    "pydicom>=3.0.0",
+    "pynrrd>=1.0.0",
+    "nbclassic >= 0.5.3",
+    "notebook >= 6.5.0",
+    "jupyterlab >= 3.6.1",
+    "ipywidgets >= 8.0.4",
+    "scipy >= 1.9.1",
+    "ipympl >= 0.9.3",
+    "tqdm >= 4.65.0",
+    "deprecated >= 1.2.12",
+    "joblib >= 1.2.0",
+    "pandas >= 1.5.3",
+    "seaborn >= 0.12.2",
+    "scikit-image >= 0.19.3",
+    "mpl-interactions",
+    "nmrglue >= 0.9",
+    "opencv-python >= 4.8.0.76",
+    "xarray >=2024.3.0",
+    "statsmodels",
+    "dipy",
+    "cmcrameri",
+    "GitPython",
+    "scikit-learn",
+    "sympy",
+    "autoflake",
+    "pre-commit",
+    "autopep8",
+    "pymapvbvd",
+    "SciencePlots",
+    "imageio",
+    "pillow",
+    "PyYAML",
+    "cmap",
+]
+
+readme = "README.md"
+license = {text="MIT License"}
+description = "Schilling-AG python module to work with Bruker MRI data"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: Apache License",
+    "Intended Audience :: Science/Research",
+]
+authors = [
+  {name="Andre Wendlinger", email="andre.wendlinger@tum.de"},
+  {name="Wolfgang Gottwald", email="wolfgang.gottwald@tum.de"},
+    {name="Luca Nagel", email="luca.nagel@tum.de"},
+    {name="Jakob Gaubatz", email="jakob.gaubatz@tum.de"},
+    {name="Miriam Kirst", email="miriam.kirst@tum.de"},
+    {name="Ben Georges Danzer", email="ben.danzer@tum.de"},
+    {name="Jacopo Frignani",email="jacopo.frignani@tum.de"}
+
+
+]
+
+[project.optional-dependencies]
+dev = [
+  "pip-tools >= 7.4.1",
+  "black >= 23.1.0",
+  "pytest >= 7.2.2",
+  "pytest-cov >= 4.0.0",
+  "tox >= 4.4.6",
+  "isort >= 5.9.0",
+  "flake8 >= 3.9.0",
+  "mypy >= 0.910",
+  "pydocstyle >= 6.1.0",
+  "bandit >= 1.7.0",
+  "pre-commit >= 2.15.0",
+  "yamllint >= 1.32.0",
+  "tomli >= 1.2.0",
+]
+docs = [
+  "sphinx>=7.2",
+  "pydata-sphinx-theme",
+  "sphinx-autodoc-typehints",
+  "myst-parser",
+  "sphinx-copybutton",
+  "sphinxcontrib-mermaid",
+  "sphinx-design",
+  "sphinx-tags",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]
+
+# Black configuration
+[tool.black]
+line-length = 88
+target-version = ["py310", "py311"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# isort configuration
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["hypermri"]
+known_third_party = ["numpy", "pandas", "xarray", "matplotlib", "tqdm", "yaml"]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+# MyPy configuration
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = false
+no_implicit_optional = false
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = false
+strict_equality = false
+disable_error_code = ["var-annotated", "assignment", "method-assign", "unreachable", "attr-defined", "import-not-found"]
+
+[[tool.mypy.overrides]]
+module = [
+    "brukerapi.*",
+    "mapvbvd.*",
+    "IPython.*",
+    "git.*",
+    "nmrglue.*",
+    "dipy.*",
+    "specutils.*",
+    "astropy.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --verbose --tb=short"
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+markers = [
+    "unit: Unit tests (fast, use mock data)",
+    "integration: Integration tests (require real MRI data)",
+    "slow: Slow tests (may take several minutes)",
+    "vendor_bruker: Tests specific to Bruker data",
+    "vendor_siemens: Tests specific to Siemens data",
+    "vendor_agilent: Tests specific to Agilent data",
+    "spectroscopy: Tests for spectroscopy functionality",
+    "anatomical: Tests for anatomical imaging functionality",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:hypermri.*",
+    "ignore::PendingDeprecationWarning",
+    "ignore::UserWarning:matplotlib.*",
+    "ignore::UserWarning:nmrglue.*",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src/hypermri"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+# Pydocstyle configuration
+[tool.pydocstyle]
+convention = "numpy"
+add-ignore = ["D100", "D104"]  # Missing module and package docstrings
+match-dir = "(?!tests).*"
+
+# Bandit configuration
+[tool.bandit]
+exclude_dirs = ["tests", "scripts/hooks"]
+skips = ["B101"]  # Skip assert_used test

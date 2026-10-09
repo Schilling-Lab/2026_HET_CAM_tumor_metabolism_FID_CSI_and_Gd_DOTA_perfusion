@@ -1,0 +1,49 @@
+# Vendor Handler Mapping Configuration
+# This file defines vendor detection patterns and handler classes
+
+vendors:
+  bruker:
+    handler_class: hypermri.brukerexp.BrukerHandler
+    priority: 100
+    detection_patterns:
+      - "file:fid"              # Has fid file
+      - "file:rawdata.job0"     # Has rawdata.job0 file
+      - "file:2dseq"            # Has 2dseq file
+      - "contains:method"       # Directory contains method file
+      - "contains:acqp"         # Directory contains acqp file
+      - "contains:visu_pars"    # Directory contains visu_pars file
+
+  siemens:
+    handler_class: hypermri.siemensexp.SiemensHandler
+    priority: 50
+    detection_patterns:
+      - "extension:.dat"        # .dat files
+      - "extension:.twix"       # .twix files (if supported)
+      - "file:twix"             # twix files
+
+  agilent:
+    handler_class: hypermri.agilentexp.AgilentHandler
+    priority: 40
+    detection_patterns:
+      - "file:fid"
+      - "file:procpar"
+
+  external:
+    handler_class: hypermri.externalexp.ExternalDataHandler
+    priority: -100              # Never auto-detect, requires explicit opt-in
+    detection_patterns: []
+
+  # Future vendor support can be added here
+  # philips:
+  #   handler_class: hypermri.vendors.philips.PhilipsHandler
+  #   priority: 25
+  #   detection_patterns:
+  #     - "extension:.par"
+  #     - "extension:.rec"
+  #
+  # ge:
+  #   handler_class: hypermri.vendors.ge.GEHandler
+  #   priority: 25
+  #   detection_patterns:
+  #     - "extension:.p7"
+  #     - "contains:P*.7"

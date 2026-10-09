@@ -1,0 +1,181 @@
+# Sequence Class Mapping Configuration
+# This file defines which sequence classes to use for smart loading
+
+sequences:
+  # Anatomical Sequences
+  flash:
+    class: hypermri.sequences.FLASH.FLASH
+    category: anatomical
+    method_patterns:
+      - "flash"
+      - "contains:flash"
+
+  bssfp:
+    class: hypermri.sequences.BSSFP.BSSFP
+    category: anatomical
+    method_patterns:
+      - "bssfp"
+      - "contains:bssfp"
+
+  b1calibration:
+    class: hypermri.sequences.B1Calibration.B1Calibration
+    category: anatomical
+    method_patterns:
+      - "b1calibration"
+      - "contains:b1calibration"
+
+  dtiepi:
+    class: hypermri.sequences.DTIEPI.DTIEPI
+    category: anatomical
+    method_patterns:
+      - "dtiepi"
+      - "contains:dtiepi"
+
+  epi:
+    class: hypermri.sequences.EPI.EPI
+    category: anatomical
+    method_patterns:
+      - "epi"
+      - "contains:epi"
+
+  spspepi:
+    class: hypermri.sequences.EPI.EPI
+    category: anatomical
+    method_patterns:
+      - "epi"
+      - "contains:spspepi"
+
+  fair_rare:
+    class: hypermri.sequences.FAIR_RARE.FAIR_RARE
+    category: anatomical
+    method_patterns:
+      - "fair_rare"
+      - "contains:fair"
+      - "contains:fair-rare"
+
+  fexi:
+    class: hypermri.sequences.FEXI.FEXI
+    category: anatomical
+    method_patterns:
+      - "fexi"
+      - "contains:fexi"
+
+  fieldmap:
+    class: hypermri.sequences.Fieldmap.Fieldmap
+    category: anatomical
+    method_patterns:
+      - "fieldmap"
+      - "contains:fieldmap"
+
+  mge:
+    class: hypermri.sequences.MGE.MGE
+    category: anatomical
+    method_patterns:
+      - "mge"
+      - "contains:mge"
+
+  rare:
+    class: hypermri.sequences.RARE.RARE
+    category: anatomical
+    method_patterns:
+      - "rare"
+      - "contains:rare"
+
+  rarevtr:
+    class: hypermri.sequences.RAREVTR.RAREVTR
+    category: anatomical
+    method_patterns:
+      - "rarevtr"
+      - "rarvtr"
+      - "contains:rarevtr"
+      - "contains:rarvtr"
+
+  umpireflash:
+    class: hypermri.sequences.umpireFLASH.umpireFLASH
+    category: anatomical
+    method_patterns:
+      - "umpireflash"
+      - "contains:umpireflash"
+      - "contains:umpire"
+
+  # Spectroscopy Sequences
+  csi:
+    class: hypermri.sequences.CSI.CSI
+    category: spectroscopy
+    method_patterns:
+      - "csi"
+      - "contains:csi"
+
+  press:
+    class: hypermri.sequences.PRESS.PRESS
+    category: spectroscopy
+    method_patterns:
+      - "press"
+      - "contains:press"
+
+  steam:
+    class: hypermri.sequences.STEAM.STEAM
+    category: spectroscopy
+    method_patterns:
+      - "steam"
+      - "contains:steam"
+
+  singlepulse:
+    class: hypermri.sequences.Singlepulse.Singlepulse
+    category: spectroscopy
+    method_patterns:
+      - "singlepulse"
+      - "single_pulse"
+      - "contains:singlepulse"
+      - "contains:single"
+
+  nspect:
+    class: hypermri.sequences.NSPECT.NSPECT
+    category: spectroscopy
+    method_patterns:
+      - "nspect"
+      - "contains:nspect"
+
+  gnspect_ms:
+    class: hypermri.sequences.gNSPECT_MS.gNSPECT_MS
+    category: spectroscopy
+    method_patterns:
+      - "gnspect_ms"
+      - "gnspect-ms"
+      - "contains:gnspect"
+
+  geoffslcspec:
+    class: hypermri.sequences.GeoffSlcSpec.GeoffSlcSpec
+    category: spectroscopy
+    method_patterns:
+      - "geoffslcspec"
+      - "geoff_slc_spec"
+      - "contains:geoffslcspec"
+      - "contains:geoff"
+
+  ivrecovery:
+    class: hypermri.sequences.IVRecovery.IVRecovery
+    category: spectroscopy
+    method_patterns:
+      - "ivrecovery"
+      - "iv_recovery"
+      - "contains:ivrecovery"
+      - "contains:inversion"
+
+  semilaser:
+    class: hypermri.sequences.semiLASER.semiLASER
+    category: spectroscopy
+    method_patterns:
+      - "semilaser"
+      - "semi_laser"
+      - "semi-laser"
+      - "contains:semilaser"
+      - "contains:laser"
+
+  # Relaxometry sequences
+  cpmg:
+    class: hypermri.sequences.CPMG.CPMG
+    category: spectroscopy  # Note: Will be moved to proper inheritance in Phase 3
+    method_patterns:
+      - "cpmg"
+      - "contains:cpmg"

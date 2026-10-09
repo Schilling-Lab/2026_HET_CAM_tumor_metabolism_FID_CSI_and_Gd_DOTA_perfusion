@@ -1,0 +1,108 @@
+# Sequence Alias Mapping Configuration
+# Converts raw Bruker Method names to canonical sequence types
+# Derived from SmartLoadMeasurements.json to maintain compatibility
+
+aliases:
+  # MGE sequence aliases
+  "<bruker:mge>": "mge"
+  "<bruker:epsi>": "mge"
+  "<user:umpiremge>": "mge"
+
+  # FLASH sequence aliases
+  "<bruker:flash>": "flash"
+  "<user:sliceprofile_flash>": "flash"
+  "<user:slicprof_inv_mk1>": "flash"
+  "<user:lucaflash_1d>": "flash"
+  "<user:low_matrixsize_flash>": "flash"
+  "<user:lowresflash>": "flash"
+  "<user:umpireflash>": "flash"
+  "<user:measure_3D_sliceprof>": "flash"
+  "<user:flash_no_slice_grad>": "flash"
+
+  # EPI sequence aliases
+  "<bruker:epi>": "epi"
+  "<user:lucaepi>": "epi"
+  "<user:lucaepispiral>": "epi"
+  "<user:lucaepispiraltraj>": "epi"
+
+  # CSI sequence aliases
+  "<bruker:csi>": "csi"
+  "<user:lucacsireco>": "csi"
+  "<user:lucacsi>": "csi"
+  "<user:lucacsi2>": "csi"
+  "<user:lucacsi3>": "csi"
+  "<user:lucacsi4>": "csi"
+  "<user:geoffcsi>": "csi"
+  "<user:csi_fix>": "csi"
+
+  # RARE sequence aliases
+  "<bruker:rare>": "rare"
+
+  # RAREVTR sequence aliases
+  "<bruker:rarevtr>": "rarevtr"
+
+  # FAIR_RARE sequence aliases
+  "<bruker:fair_rare>": "fair_rare"
+
+  # NSPECT sequence aliases
+  "<bruker:nspect>": "nspect"
+  "<user:gnspect>": "nspect"
+
+  # CPMG sequence aliases
+  "<bruker:cpmg>": "cpmg"
+  "<user:more_echoes_cpmg>": "cpmg"
+
+  # Single Pulse sequence aliases
+  "<bruker:singlepulse>": "singlepulse"
+  "<user:lucasp_inc_ref>": "singlepulse"
+
+  # BSSFP (FISP) sequence aliases
+  "<bruker:fisp>": "bssfp"
+  "<user:fisp_grad_1metab_cs>": "bssfp"
+  "<user:fisp_grad_1metab_cs2>": "bssfp"
+  "<user:fisp_gr_1_met_cs_me>": "bssfp"
+  "<user:jakob_fisp_me>": "bssfp"
+  "<user:fisp_me_backup>": "bssfp"
+  "<user:altpowrx_g_fisp>": "bssfp"
+  "<user:altpow_jgs_alt_fisp>": "bssfp"
+  "<user:altpowrx_g_fisp_luca>": "bssfp"
+
+  # GeoffSlcSpec sequence aliases
+  "<user:geoffslcspec_12>": "geoffslcspec"
+
+  # gNSPECT_MS sequence aliases
+  "<user:gnspect_ms>": "gnspect_ms"
+
+  # FEXI sequence aliases
+  "<user:ath_fexi_tmcompds_2>": "fexi"
+  "<user:a_m_fexi_2>": "fexi"
+  "<user:jacfxsl_2repdumdum>": "fexi"
+  "<user:jacfxsl_rdo>": "fexi"
+  "<user:jacfxsl_2repdumnew>": "fexi"
+  "<user:jfx_2volupd2>": "fexi"
+
+  # DTIEPI sequence aliases
+  "<bruker:dtiepi>": "dtiepi"
+
+  # IV Recovery sequence aliases
+  "<user:wg_iv_recovery>": "ivrecovery"
+  "<user:wg_ivrecov_1ivt>": "ivrecovery"
+
+  # PRESS sequence aliases
+  "<user:wg_multi_voxel_press>": "press"
+  "<user:wg_mv_press_reps>": "press"
+  "<bruker:press>": "press"
+
+  # semiLASER sequence aliases
+  "<user:wg_slaser>": "semilaser"
+  "<user:wg_mv_slaser>": "semilaser"
+
+  # B1 Calibration sequence aliases
+  "<user:max_b1shapelist_4>": "b1calibration"
+  "<user:lucab1shapelist_1>": "b1calibration"
+
+  # Fieldmap sequence aliases
+  "<bruker:fieldmap>": "fieldmap"
+
+  # Agilent spectroscopy default
+  "agilent_spectroscopy": "nspect"

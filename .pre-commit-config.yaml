@@ -1,0 +1,162 @@
+# Stage 1: Basic file cleanup (no Python syntax checking yet)
+# Run this first to fix basic file formatting issues
+repos:
+  # Fix basic file formatting issues
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: "Remove trailing whitespace"
+      - id: end-of-file-fixer
+        name: "Fix file endings"
+      - id: check-yaml
+        name: "Validate YAML syntax"
+      - id: check-added-large-files
+        name: "Check for large files"
+        args: [--maxkb=500]
+      - id: check-merge-conflict
+        name: "Check for merge conflicts"
+
+  # YAML formatting validation
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        name: "Lint YAML files"
+        args: [-d, relaxed]
+        files: \.(yaml|yml)$
+
+  # Clean Python cache files before commit
+  - repo: local
+    hooks:
+      - id: clean-python-cache
+        name: "Clean Python cache files"
+        entry: bash -c 'find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true; find . -name "*.pyc" -delete 2>/dev/null || true; find . -name "*.pyo" -delete 2>/dev/null || true; echo "🧹 Python cache cleaned"'
+        language: system
+        pass_filenames: false
+        always_run: false
+        files: \.py$
+
+  # Stage 2: Python code formatting
+  # Format Python code with Black
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        name: "Format Python code with Black"
+        language_version: python3
+        args: [--line-length=88]
+
+  # Remove unused imports and variables
+  - repo: https://github.com/pycqa/autoflake
+    rev: v2.3.1
+    hooks:
+      - id: autoflake
+        name: "Remove unused imports and variables"
+        args:
+          - --in-place
+          - --remove-all-unused-imports
+          - --remove-unused-variables
+          - --remove-duplicate-keys
+          - --ignore-init-module-imports
+
+  # Sort and organize imports
+  - repo: https://github.com/pycqa/isort
+    rev: 6.0.1
+    hooks:
+      - id: isort
+        name: "Sort Python imports"
+        args: ["--profile", "black", "--filter-files"]
+
+  # Stage 3: Full linting and validation
+  # Type checking with mypy
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.17.1
+  #   hooks:
+  #     - id: mypy
+  #       additional_dependencies: [types-PyYAML, types-requests]
+  #       args: [--ignore-missing-imports, --namespace-packages]
+  #       exclude: ^(docs/|tests/test_.*\.py|scripts/hooks/)
+  #       entry: >
+  #         bash -c 'mypy "$@" > mypy_precommit.log 2>&1 && rm mypy_precommit.log || { echo "❌ MyPy failed! Log: mypy_precommit.log"; cat mypy_precommit.log; exit 1; }' --
+
+  # Linting with flake8
+  # - repo: https://github.com/pycqa/flake8
+  #   rev: 7.3.0
+  #   hooks:
+  #     - id: flake8
+  #       args: ["--max-line-length=88", "--extend-ignore=E203,W503,F541,F401,E501"]
+  #       exclude: ^(scripts/hooks/)
+  #       entry: >
+  #         bash -c 'flake8 "$@" > flake8_precommit.log 2>&1 && rm flake8_precommit.log || { echo "❌ Flake8 failed! Log: flake8_precommit.log"; cat flake8_precommit.log; exit 1; }' --
+
+  # Docstring validation with pydocstyle
+  #   - repo: https://github.com/pycqa/pydocstyle
+  #     rev: 6.3.0
+  #     hooks:
+  #       - id: pydocstyle
+  #         args: [--convention=numpy, --add-ignore=D100,D104,D107,D212]
+  #         exclude: ^(tests/|examples/|scripts/hooks/)
+
+  # Security linting with bandit
+  # - repo: https://github.com/pycqa/bandit
+  #   rev: 1.8.6
+  #   hooks:
+  #     - id: bandit
+  #       args: [-r, -f, json, --skip, B110]
+  #       exclude: ^(tests/|scripts/hooks/)
+  #       entry: >
+  #         bash -c 'bandit "$@" > bandit_precommit.log 2>&1 && rm bandit_precommit.log || { echo "❌ Bandit failed! Log: bandit_precommit.log"; cat bandit_precommit.log; exit 1; }' --
+
+  # Custom HyperMRI standards validation
+  # - repo: local
+  #   hooks:
+      # - id: hypermri-naming-conventions
+      #   name: HyperMRI Naming Conventions
+      #   entry: >
+      #     bash -c 'python scripts/hooks/validate_naming.py "$@" > naming_precommit.log 2>&1 && rm naming_precommit.log || { echo "❌ Naming check failed! Log: naming_precommit.log"; cat naming_precommit.log; exit 1; }' --
+      #   language: python
+      #   files: \.py$
+      #   exclude: ^(tests/|examples/|docs/|scripts/hooks/)
+
+      # - id: hypermri-docstring-standards
+      #   name: HyperMRI Docstring Standards
+      #   entry: >
+      #     bash -c 'python scripts/hooks/validate_docstrings.py "$@" > docstrings_precommit.log 2>&1 && rm docstrings_precommit.log || { echo "❌ Docstring check failed! Log: docstrings_precommit.log"; cat docstrings_precommit.log; exit 1; }' --
+      #   language: python
+      #   files: \.py$
+      #   exclude: ^(tests/|examples/|docs/|scripts/hooks/)
+
+      # - id: hypermri-type-hints
+      #   name: HyperMRI Type Hints
+      #   entry: >
+      #     bash -c 'python scripts/hooks/validate_type_hints.py "$@" > typehints_precommit.log 2>&1 && rm typehints_precommit.log || { echo "❌ Type hint check failed! Log: typehints_precommit.log"; cat typehints_precommit.log; exit 1; }' --
+      #   language: python
+      #   files: \.py$
+      #   exclude: ^(tests/|examples/|docs/|scripts/hooks/)
+
+      # - id: hypermri-import-standards
+      #   name: HyperMRI Import Standards
+      #   entry: >
+      #     bash -c 'python scripts/hooks/validate_imports.py "$@" > imports_precommit.log 2>&1 && rm imports_precommit.log || { echo "❌ Import check failed! Log: imports_precommit.log"; cat imports_precommit.log; exit 1; }' --
+      #   language: python
+      #   files: \.py$
+      #   exclude: ^(tests/|examples/|docs/|scripts/hooks/)
+
+      # - id: hypermri-registry-compliance
+      #   name: HyperMRI Registry Compliance
+      #   entry: >
+      #     bash -c 'python scripts/hooks/validate_registry_compliance.py "$@" > registry_precommit.log 2>&1 && rm registry_precommit.log || { echo "❌ Registry check failed! Log: registry_precommit.log"; cat registry_precommit.log; exit 1; }' --
+      #   language: python
+      #   files: \.py$
+      #   exclude: ^(tests/|examples/|docs/|scripts/hooks/)
+
+      # Conditional Test Execution
+      # - id: run-tests-on-main
+      #   name: Run Unit Tests (Main Branch Only)
+      #   # Checks if branch is 'main', if so runs pytest. Otherwise prints skipping message.
+      #   entry: >
+      #     bash -c 'if [ "$(git branch --show-current)" = "main" ]; then echo "🚀 Running tests on main branch..."; (pytest > pytest_precommit.log 2>&1) && rm pytest_precommit.log || { echo "❌ Tests failed! Log: pytest_precommit.log"; cat pytest_precommit.log; exit 1; }; else echo "⏭️  Skipping tests (not on main branch)"; fi'
+      #   language: system
+      #   pass_filenames: false
+      #   always_run: true

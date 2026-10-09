@@ -1,0 +1,13 @@
+# Stage 0: Python syntax validation (run this first to find syntax errors)
+# This will help identify files with syntax errors before running other hooks
+repos:
+  - repo: local
+    hooks:
+      - id: python-syntax-check
+        name: "Check Python syntax"
+        description: "Validates Python files can be parsed (finds syntax errors)"
+        entry: python -m py_compile
+        language: system
+        files: \.py$
+        exclude: ^(tests/|examples/|docs/|__pycache__/)
+        pass_filenames: true

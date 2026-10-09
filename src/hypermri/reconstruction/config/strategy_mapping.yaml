@@ -1,0 +1,298 @@
+# Reconstruction Strategy Mapping Configuration
+
+vendors:
+  bruker:
+    sequences:
+      # Flash sequence
+      flash:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerFlashRawRecoStrategy
+          options:
+            data_precision: "float16"
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options:
+            data_precision: "float16"
+
+      # BSSFP sequence
+      bssfp:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options:
+            data_precision: "float16"
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options:
+            data_precision: "float16"
+
+      # B1 Calibration
+      b1calibration:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # CPMG sequence
+      cpmg:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # DTI EPI sequence
+      dtiepi:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # EPI sequence
+      epi:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # SPSP EPI sequence
+      spspepi:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # FAIR-RARE sequence
+      fair_rare:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRareRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # RARE sequence
+      rare:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRareRawRecoStrategy
+          options:
+            data_precision: "float16"
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options:
+            data_precision: "float16"
+
+      # FEXI sequence
+      fexi:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # Geoff Slice Spec
+      geoffslcspec:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # gNSPECT_MS
+      gnspect_ms:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerSpectroRecoStrategy
+          options:
+            reshape_fid: false
+            postprocess_fid: false
+            set_kspace_xarray: true
+            shift_xarray: false
+            set_reco_data: true
+            # no_reconstruction: true # No reconstruction for gnspect_ms 2dseq data
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options:
+            no_reconstruction: true # No reconstruction for gnspect_ms raw data
+
+
+      # IV Recovery
+      ivrecovery:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # MGE sequence
+      mge:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # NSPECT sequence
+      nspect:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerSpectroRecoStrategy
+          options:
+            reshape_fid: false
+            postprocess_fid: false
+            set_kspace_xarray: true
+            shift_xarray: false
+            set_reco_data: true
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # CSI sequence - uses specialized strategy
+      csi:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerCsiRecoStrategy
+          options:
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # PRESS sequence - spectroscopy with special options
+      press:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerSpectroRecoStrategy
+          options:
+            reshape_fid: false
+            postprocess_fid: false
+            set_kspace_xarray: true
+            shift_xarray: false
+            set_reco_data: true
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options:
+            no_reconstruction: true # Disable seq2d reconstruction for PRESS data
+
+      # RARE VTR
+      rarvtr:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # semiLASER
+      semilaser:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # Single Pulse - spectroscopy with special options
+      singlepulse:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerSpectroRecoStrategy
+          options:
+            reshape_fid: false
+            postprocess_fid: false
+            set_kspace_xarray: true
+            shift_xarray: false
+            set_reco_data: true
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # STEAM
+      steam:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # umpire FLASH
+      umpireflash:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # umpire MGE
+      umpiremge:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options: {}
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options: {}
+
+      # Fieldmap
+      fieldmap:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options:
+            no_reconstruction: true # No reconstruction for fieldmap raw data
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options:
+            no_reconstruction: false # No reconstruction for fieldmap 2dseq data
+            # Needs specialized fieldmap processing later (metadata says echoes
+            # but seq2d has b0 calculation already applied)
+
+      # Default fallback strategies
+      default:
+        raw:
+          strategy: hypermri.recon_strategy.BrukerRawRecoStrategy
+          options:
+            data_precision: "float16"
+        seq2d:
+          strategy: hypermri.recon_strategy.Brukerseq2dRecoStrategy
+          options:
+            data_precision: "float16"
+
+  agilent:
+    sequences:
+      nspect:
+        raw:
+          strategy: hypermri.recon_strategy.AgilentSpectroRecoStrategy
+          options:
+            remove_dc: false
+            apply_digital_filter: false
+            apodization: off
+            combine_channels: true
+            combine_method: rss
+            retain_channel_axis: false
+            apply_phasing: false
+      default:
+        raw:
+          strategy: hypermri.recon_strategy.AgilentSpectroRecoStrategy
+          options:
+            remove_dc: false
+            apply_digital_filter: false
+            apodization: off
+            combine_channels: true
+            combine_method: rss
+            retain_channel_axis: false
+            apply_phasing: false
+
+  siemens:
+    sequences:
+      # Default Siemens (limited support currently)
+      default:
+        raw:
+          strategy: hypermri.siemens_recon_strategy.SiemensRawRecoStrategy
+          options: {}

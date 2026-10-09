@@ -1,0 +1,47 @@
+# Global Default Settings for hypermri
+
+# Default data loading behavior
+data_loading:
+  default_load_mode: "minimal"  # Options: true, false, "minimal", "lazy"
+  default_precision: "float16"
+  enable_debug_messages: false
+
+# Default reconstruction settings
+reconstruction:
+  default_reco_type: "seq2d"
+  enable_caching: true
+  cache_strategy_instances: true
+
+# Default plotting settings
+plotting:
+  default_backend: "matplotlib"
+  default_colormap: "viridis"
+  default_figure_size: [10, 8]
+  enable_interactive: true
+  default_dpi: 100
+
+# Study loading settings
+study:
+  enable_smart_loading: true
+  default_sort_by_timestamp: true
+  enable_progress_bars: true
+
+# Logging configuration
+logging:
+  default_level: "ERROR"
+  format: "[%(levelname)s] %(name)s.%(funcName)s(): %(message)s"
+  enable_file_logging: false
+
+# Registry settings
+registries:
+  auto_load_configs: true
+  config_search_paths:
+    - "config/"
+    - "~/.hypermri/config/"
+    - "/etc/hypermri/config/"
+
+# Performance settings
+performance:
+  enable_multiprocessing: true
+  default_n_cores: null  # null = auto-detect
+  memory_limit_mb: 8192  # 8GB default memory limit

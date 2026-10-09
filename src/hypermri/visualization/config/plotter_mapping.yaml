@@ -1,0 +1,90 @@
+# Plotter Registry Configuration
+#
+# This file defines the mapping between plotter keys and their implementations,
+# directly referencing the existing plotter classes in utils/plot/
+#
+# Configuration format:
+# plotters:
+#   <plotter_key>:
+#     class: <full.module.path.ClassName>
+#     categories: [<category1>, <category2>, ...]
+#     options:
+#       <option_name>: <default_value>
+
+plotters:
+  # Direct references to existing plotter classes
+  anatomy:
+    class: hypermri.utils.plot.anatomyPlotter.AnatomyPlotter
+    categories: [anatomical]
+    options:
+      figsize: [10, 5]
+      cmap: gray
+      interpolation: bilinear
+      show_colorbar: true
+
+  spectroscopy:
+    class: hypermri.utils.plot.spectroscopyPlotter.SpectroscopyPlotter
+    categories: [spectroscopy]
+    options:
+      figsize: [10, 5]
+      show_ppm: true
+      show_hz: false
+      line_width: 1.0
+
+  unified:
+    class: hypermri.utils.plot.unifiedPlotter.UnifiedPlotter
+    categories: [anatomical, spectroscopy]
+    options:
+      figsize: [10, 5]
+      adaptive_layout: true
+
+  # Sequence-specific plotters
+  # fexi:
+  #   class: hypermri.sequences.plottingFEXI.FEXIPlotter
+  #   categories: [specialized]
+  #   options:
+  #     figsize: [12, 8]
+  #     show_fits: true
+
+  # umpireMGE plotters - using adapters for backward compatibility
+  umpire_2d:
+    class: hypermri.visualization.adapters.UmpireMGEPlotterAdapter
+    legacy_class: hypermri.sequences.umpireMGE._plot_results2D.UmpirePlotter2D
+    categories: [quantitative, anatomical]
+    options:
+      figsize: [10, 6]
+      show_snr: true
+
+  umpire_3d:
+    class: hypermri.visualization.adapters.UmpireMGEPlotterAdapter
+    legacy_class: hypermri.sequences.umpireMGE._plot_results3D.UmpirePlotter3D
+    categories: [quantitative, anatomical]
+    options:
+      figsize: [12, 8]
+      volume_rendering: false
+
+  snr_masking:
+    class: hypermri.visualization.adapters.UmpireMGEPlotterAdapter
+    legacy_class: hypermri.sequences.umpireMGE._plot_snr_masking.SNRMaskingPlotter
+    categories: [quality_control]
+    options:
+      figsize: [10, 5]
+      mask_alpha: 0.5
+
+# Default plotter selections for categories
+defaults:
+  anatomical: anatomy
+  spectroscopy: spectroscopy
+  quantitative: umpire_3d
+  specialized: unified
+  quality_control: snr_masking
+
+# Visualization settings
+visualization:
+  default_figsize: [8, 6]
+  default_dpi: 100
+  default_backend: inline
+  color_schemes:
+    anatomical: gray
+    spectroscopy: viridis
+    quantitative: plasma
